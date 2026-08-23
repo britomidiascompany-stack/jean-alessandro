@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Redirecionando…</title>
+<style>
+  html,body{height:100%;margin:0;background:#0A0A0A;color:#F3F0FA;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;display:flex;align-items:center;justify-content:center}
+  .box{text-align:center}
+  .spin{width:28px;height:28px;border:3px solid rgba(255,255,255,.15);border-top-color:#A78BFA;border-radius:50%;margin:0 auto 14px;animation:s .7s linear infinite}
+  @keyframes s{to{transform:rotate(360deg)}}
+  p{margin:0;font-size:14px;color:#B7AFC9}
+</style>
+</head>
+<body>
+<div class="box">
+  <div class="spin"></div>
+  <p>Redirecionando…</p>
+</div>
+
+<noscript>
+  <meta http-equiv="refresh" content="0; url=https://fda-lotezero.vercel.app/fda-lotezero/v1/">
+</noscript>
+
+<script>
+(function () {
+  // --- Configuração do teste A/B de páginas · FDA / Jean Alessandro (Lote Zero) ---
+  var VARIANTS = {
+    v1: "https://fda-lotezero.vercel.app/fda-lotezero/v1/",
+    v2: "https://fda-lotezero.vercel.app/fda-lotezero/v2/",
+    v3: "https://fda-lotezero.vercel.app/fda-lotezero/v3/",
+    v4: "https://fda-lotezero.vercel.app/fda-lotezero/v4/"
+  };
+  var WEBHOOK = "https://brito-midias-n8n.ertdxv.easypanel.host/webhook/fda-ja-ab-teste";
+  var STORAGE_KEY = "fda_ja_ab_variant";
+  var REDIRECT_DELAY_MS = 80; // dá tempo do beacon de log sair antes de navegar
+
+  var qs = new URLSearchParams(window.location.search);
+  var keys = Object.keys(VARIANTS);
+
+  function pickVariant() {
+    var forced = qs.get("force");
+    if (forced && VARIANTS[forced]) return forced;
+
+    try {
+      var saved = localStorage.getItem(STORAGE_KEY);
+      if (saved && VARIANTS[saved]) return saved;
+    } catch (e) {}
+
+    var chosen = keys[Math.floor(Math.random() * keys.length)];
+    try { localStorage.setItem(STORAGE_KEY, chosen); } catch (e) {}
+    return chosen;
+  }
+
+  function logEvent(variant) {
+    var params = new URLSearchParams();
+    params.set("event", "visita");
+    params.set("variante", variant);
+    ["utm_source", "utm_medium", "utm_content", "utm_campaign", "utm_term", "src"].forEach(function (k) {
+      var v = qs.get(k);
+      if (v) params.set(k, v);
+    });
+    try {
+      new Image().src = WEBHOOK + "?" + params.toString();
+    } catch (e) {}
+  }
+
+  function buildTargetUrl(variant) {
+    var base = VARIANTS[variant];
+    var extra = qs.toString();
+    return extra ? base + "?" + extra : base;
+  }
+
+  var variant = pickVariant();
+  logEvent(variant);
+  var target = buildTargetUrl(variant);
+
+  setTimeout(function () {
+    window.location.replace(target);
+  }, REDIRECT_DELAY_MS);
+})();
+</script>
+</body>
+</html>
