@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relatório de Tráfego Pago — Jean Alessandro | FDA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --roxo:#7C3AED; --roxo-dark:#5B21B6; --roxo-deep:#3B0F73; --roxo-light:#A78BFA; --roxo-xlight:#EDE9FE;
+  --preto:#0A0A0A; --ink:#141018; --cinza:#5B5566; --linha:#E7E3EE; --bg:#FFFFFF; --bg-soft:#FAF9FC;
+  --good:#0F9D58; --warn:#B45309; --bad:#DC2626;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Poppins',sans-serif;font-weight:300;color:var(--ink);background:var(--bg);line-height:1.6}
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+a{color:var(--roxo-dark)}
+
+/* HERO */
+.hero{
+  position:relative;overflow:hidden;color:#fff;padding:64px 0 48px;
+  background:
+    radial-gradient(1100px 500px at 78% -10%, rgba(124,58,237,.55), transparent 60%),
+    linear-gradient(150deg, #0A0A0A 0%, #17111F 45%, #3B0F73 100%);
+}
+.hero::before{
+  content:"";position:absolute;inset:0;
+  background-image:linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+  background-size:44px 44px;
+  mask-image:radial-gradient(ellipse at 60% 20%, black 40%, transparent 75%);
+}
+.hero-inner{position:relative}
+.brand{display:flex;align-items:center;gap:14px;margin-bottom:36px}
+.brand svg{width:38px;height:38px}
+.brand .word{display:flex;align-items:center;gap:10px;font-weight:300}
+.brand .word b{font-weight:800;font-size:17px}
+.brand .word .bar{width:2px;height:22px;background:rgba(255,255,255,.55)}
+.brand .word span{font-size:17px;letter-spacing:.22em}
+.section-label{display:flex;align-items:center;gap:12px;font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--roxo-light);margin-bottom:14px}
+.section-label::before{content:"";width:34px;height:2px;background:var(--roxo-light);border-radius:2px}
+.section-label.on-light{color:var(--roxo)}
+.section-label.on-light::before{background:var(--roxo)}
+h1{font-size:42px;font-weight:800;letter-spacing:-.02em;margin:0 0 12px;max-width:720px}
+.hero p.sub{font-size:16px;color:rgba(255,255,255,.72);max-width:640px;margin:0 0 6px}
+.hero .meta{font-size:13px;color:rgba(255,255,255,.5);font-family:'JetBrains Mono',monospace;font-variant-ligatures:none}
+
+/* KPI ROW */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:40px}
+.kpi{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:20px}
+.kpi small{display:block;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--roxo-light);margin-bottom:8px}
+.kpi b{display:block;font-size:26px;font-weight:700;color:#fff}
+.kpi .note{font-size:12px;color:rgba(255,255,255,.5);margin-top:4px}
+
+/* SECTIONS */
+section{padding:56px 0}
+section.soft{background:var(--bg-soft)}
+h2{font-size:28px;font-weight:700;margin:0 0 8px}
+.intro{color:var(--cinza);font-size:15px;max-width:640px;margin:0 0 32px}
+
+/* FUNNEL */
+.funnel{display:flex;flex-direction:column;gap:2px;max-width:720px}
+.funnel-step{display:grid;grid-template-columns:170px 1fr 120px;align-items:center;gap:16px}
+.funnel-step .label{font-size:13px;font-weight:600;color:var(--ink)}
+.funnel-track{background:var(--roxo-xlight);border-radius:8px;height:34px;position:relative;overflow:hidden}
+.funnel-fill{height:100%;border-radius:8px;background:linear-gradient(90deg,#7C3AED,#5B21B6);display:flex;align-items:center;padding-left:12px;color:#fff;font-size:13px;font-weight:600;font-family:'JetBrains Mono',monospace;font-variant-ligatures:none;white-space:nowrap}
+.funnel-step .val{font-size:13px;color:var(--cinza);font-family:'JetBrains Mono',monospace;font-variant-ligatures:none;text-align:right}
+.funnel-drop{font-size:12px;color:var(--cinza);margin:6px 0 6px 186px}
+.funnel-drop b{color:var(--roxo-dark);font-family:'JetBrains Mono',monospace;font-variant-ligatures:none}
+
+/* TABLE */
+.table-scroll{overflow-x:auto;border:1px solid var(--linha);border-radius:14px}
+table{width:100%;border-collapse:collapse;min-width:920px;font-size:13px}
+thead th{background:var(--bg-soft);text-align:left;padding:12px 14px;font-weight:600;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--cinza);border-bottom:1px solid var(--linha);white-space:nowrap}
+tbody td{padding:12px 14px;border-bottom:1px solid var(--linha);font-family:'JetBrains Mono',monospace;font-variant-ligatures:none;white-space:nowrap;color:var(--ink)}
+tbody td.name{font-family:'Poppins',sans-serif;font-weight:500;white-space:normal;min-width:200px}
+tbody tr:last-child td{border-bottom:none}
+tbody tr.muted td{color:var(--cinza);opacity:.6}
+.tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:100px;margin-left:8px}
+.tag.paused{background:#F3E8D8;color:var(--warn)}
+.tag.zero{background:#FBE9E9;color:var(--bad)}
+.tag.advantage{background:var(--roxo-xlight);color:var(--roxo-dark)}
+.tag.quente{background:#E9F5EE;color:var(--good)}
+tfoot td{padding:12px 14px;font-weight:700;font-family:'JetBrains Mono',monospace;font-variant-ligatures:none;border-top:2px solid var(--ink);background:var(--bg-soft)}
+tfoot td.name{font-family:'Poppins',sans-serif}
+
+/* CREATIVES */
+.creative-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.creative-card{border:1px solid var(--linha);border-radius:16px;padding:20px;background:var(--bg)}
+.creative-card .rank{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:100px;background:linear-gradient(90deg,#7C3AED,#5B21B6);color:#fff;font-size:12px;font-weight:700;margin-bottom:12px}
+.creative-card h3{font-size:15px;font-weight:600;margin:0 0 14px;line-height:1.4}
+.creative-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.creative-stats div small{display:block;font-size:10px;color:var(--cinza);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px}
+.creative-stats div b{font-size:16px;font-weight:700;font-family:'JetBrains Mono',monospace;font-variant-ligatures:none}
+.creative-card a.drive{font-size:13px;font-weight:600;color:var(--roxo-dark);text-decoration:none}
+.creative-card a.drive:hover{text-decoration:underline}
+.creative-card .no-link{font-size:12px;color:var(--cinza);font-style:italic}
+
+/* FOOTER */
+footer{background:var(--ink);color:rgba(255,255,255,.6);padding:40px 0;font-size:13px}
+footer .brand .word b{color:#fff}
+
+.pill{display:inline-block;border:1px solid var(--roxo-light);color:var(--roxo-dark);border-radius:100px;padding:6px 14px;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:18px}
+
+@media (max-width:720px){
+  .kpi-row{grid-template-columns:repeat(2,1fr)}
+  .creative-grid{grid-template-columns:1fr}
+  h1{font-size:32px}
+  .funnel-step{grid-template-columns:120px 1fr 90px}
+  .funnel-drop{margin-left:136px}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner wrap">
+    <div class="brand">
+      <svg viewBox="0 0 100 100" fill="none" stroke="#fff" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" aria-label="BM Mídias">
+        <polygon points="50,4 90,27 90,73 50,96 10,73 10,27"></polygon>
+        <polygon points="50,33 65,59 35,59"></polygon>
+        <line x1="50" y1="4" x2="50" y2="33"></line><line x1="90" y1="73" x2="65" y2="59"></line>
+        <line x1="10" y1="73" x2="35" y2="59"></line><line x1="90" y1="27" x2="50" y2="33"></line>
+        <line x1="90" y1="27" x2="65" y2="59"></line><line x1="50" y1="96" x2="65" y2="59"></line>
+        <line x1="50" y1="96" x2="35" y2="59"></line><line x1="10" y1="27" x2="35" y2="59"></line>
+        <line x1="10" y1="27" x2="50" y2="33"></line>
+      </svg>
+      <span class="word"><b>BM</b><i class="bar"></i><span>MÍDIAS</span></span>
+    </div>
+    <div class="section-label">TRÁFEGO PAGO · META ADS</div>
+    <h1>Relatório de Performance — Jean Alessandro</h1>
+    <p class="sub">Funil completo das campanhas do lançamento <b>Lote Zero</b> ("O Fim da Autossabotagem"), campanha guarda-chuva METEORICO — captação de leads via WhatsApp VIP.</p>
+    <p class="meta">Conta: CA · Reserva 02 (1669190010547318) · Período: acumulado desde o início até 24/08/2026</p>
+
+    <div class="kpi-row">
+      <div class="kpi"><small>Investimento total</small><b>R$ 1.720,63</b><div class="note">6 campanhas com veiculação</div></div>
+      <div class="kpi"><small>Leads gerados</small><b>231</b><div class="note">via formulário da página</div></div>
+      <div class="kpi"><small>Custo por lead</small><b>R$ 7,45</b><div class="note">médio ponderado</div></div>
+      <div class="kpi"><small>CTR médio</small><b>4,58%</b><div class="note">1.689 cliques / 36.902 impr.</div></div>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="section-label on-light">FUNIL CONSOLIDADO</div>
+    <h2>Da impressão ao lead</h2>
+    <p class="intro">Somatório das 6 campanhas com veiculação (exclui <b>[00]</b>, pausada sem gasto, e <b>[02]</b>, sem entrega registrada no período).</p>
+
+    <div class="funnel">
+      <div class="funnel-step">
+        <span class="label">Impressões</span>
+        <div class="funnel-track"><div class="funnel-fill" style="width:100%">36.902</div></div>
+        <span class="val">R$ 46,63 CPM</span>
+      </div>
+      <div class="funnel-drop">↓ <b>4,58%</b> CTR</div>
+
+      <div class="funnel-step">
+        <span class="label">Cliques no link</span>
+        <div class="funnel-track"><div class="funnel-fill" style="width:56%">1.119</div></div>
+        <span class="val">R$ 1,54 / clique</span>
+      </div>
+      <div class="funnel-drop">↓ <b>75,2%</b> connect rate</div>
+
+      <div class="funnel-step">
+        <span class="label">Visualiz. de página</span>
+        <div class="funnel-track"><div class="funnel-fill" style="width:42%">842</div></div>
+        <span class="val">page load</span>
+      </div>
+      <div class="funnel-drop">↓ <b>27,4%</b> conversão da página</div>
+
+      <div class="funnel-step">
+        <span class="label">Leads</span>
+        <div class="funnel-track"><div class="funnel-fill" style="width:12%">231</div></div>
+        <span class="val">R$ 7,45 / lead</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="soft">
+  <div class="wrap">
+    <div class="section-label on-light">POR CAMPANHA</div>
+    <h2>Resultados por campanha</h2>
+    <p class="intro">Métricas acumuladas desde o início de cada campanha até hoje.</p>
+
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Campanha</th><th>Investimento</th><th>CPM</th><th>Impressões</th><th>Freq.</th>
+            <th>Cliques link</th><th>CTR</th><th>CPC</th><th>Visual. página</th><th>Connect rate</th>
+            <th>Conv. página</th><th>Leads</th><th>Custo/lead</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="name">[01] Quente<span class="tag quente">quente</span></td>
+            <td>R$ 527,86</td><td>R$ 43,95</td><td>12.011</td><td>1,28</td>
+            <td>363</td><td>4,35%</td><td>R$ 1,01</td><td>267</td><td>73,6%</td>
+            <td>22,5%</td><td>60</td><td>R$ 8,80</td>
+          </tr>
+          <tr>
+            <td class="name">[03] Quente<span class="tag quente">quente</span></td>
+            <td>R$ 519,77</td><td>R$ 41,11</td><td>12.643</td><td>1,40</td>
+            <td>326</td><td>3,41%</td><td>R$ 1,21</td><td>252</td><td>77,3%</td>
+            <td>29,8%</td><td>75</td><td>R$ 6,93</td>
+          </tr>
+          <tr>
+            <td class="name">[04] Advantage+<span class="tag advantage">advantage</span></td>
+            <td>R$ 242,97</td><td>R$ 56,60</td><td>4.293</td><td>1,07</td>
+            <td>146</td><td>5,94%</td><td>R$ 0,95</td><td>114</td><td>78,1%</td>
+            <td>33,3%</td><td>38</td><td>R$ 6,39</td>
+          </tr>
+          <tr>
+            <td class="name">[06] Advantage+<span class="tag advantage">advantage</span></td>
+            <td>R$ 244,15</td><td>R$ 50,92</td><td>4.795</td><td>1,12</td>
+            <td>174</td><td>6,19%</td><td>R$ 0,82</td><td>130</td><td>74,7%</td>
+            <td>28,5%</td><td>37</td><td>R$ 6,60</td>
+          </tr>
+          <tr>
+            <td class="name">[05] Advantage+<span class="tag advantage">advantage</span></td>
+            <td>R$ 99,10</td><td>R$ 62,68</td><td>1.581</td><td>1,17</td>
+            <td>56</td><td>4,87%</td><td>R$ 1,29</td><td>40</td><td>71,4%</td>
+            <td>35,0%</td><td>14</td><td>R$ 7,08</td>
+          </tr>
+          <tr>
+            <td class="name">[07] Advantage+<span class="tag advantage">advantage</span></td>
+            <td>R$ 86,78</td><td>R$ 54,96</td><td>1.579</td><td>1,13</td>
+            <td>54</td><td>6,78%</td><td>R$ 0,81</td><td>39</td><td>72,2%</td>
+            <td>17,9%</td><td>7</td><td>R$ 12,40</td>
+          </tr>
+          <tr class="muted">
+            <td class="name">[02] Quente<span class="tag zero">sem entrega</span></td>
+            <td colspan="12">Ativa, mas sem impressões/gasto registrado no período — CBO não alocou verba para este conjunto.</td>
+          </tr>
+          <tr class="muted">
+            <td class="name">[00] Modelo original<span class="tag paused">pausada</span></td>
+            <td colspan="12">Pausada desde a criação — 40 anúncios (32 vídeos + 8 imagens) prontos, sem veiculação.</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td class="name">Total (6 campanhas ativas)</td>
+            <td>R$ 1.720,63</td><td>R$ 46,63</td><td>36.902</td><td>1,25</td>
+            <td>1.119</td><td>4,58%</td><td>R$ 1,02</td><td>842</td><td>75,2%</td>
+            <td>27,4%</td><td>231</td><td>R$ 7,45</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-label on-light">MELHORES CRIATIVOS</div>
+    <h2>Top criativos por leads</h2>
+    <p class="intro">Ranking somando o desempenho do mesmo criativo em todas as campanhas onde está ativo (cada vídeo roda em várias campanhas Advantage+ ao mesmo tempo para teste).</p>
+
+    <div class="creative-grid">
+      <div class="creative-card">
+        <span class="rank">1</span>
+        <h3>ADV23 — "Aqui dentro" (rastreio+FDA), 0:51</h3>
+        <div class="creative-stats">
+          <div><small>Leads</small><b>74</b></div>
+          <div><small>Custo/lead</small><b>R$ 8,31</b></div>
+          <div><small>Cliques link</small><b>376</b></div>
+        </div>
+        <span class="no-link">Vídeo do funil de retargeting — sem link catalogado na planilha de criativos.</span>
+      </div>
+
+      <div class="creative-card">
+        <span class="rank">2</span>
+        <h3>ADV21 — "Livro pequeno" (rastreio+FDA), 0:57</h3>
+        <div class="creative-stats">
+          <div><small>Leads</small><b>51</b></div>
+          <div><small>Custo/lead</small><b>R$ 6,45</b></div>
+          <div><small>Cliques link</small><b>246</b></div>
+        </div>
+        <span class="no-link">Vídeo do funil de retargeting — sem link catalogado na planilha de criativos.</span>
+      </div>
+
+      <div class="creative-card">
+        <span class="rank">3</span>
+        <h3>ADV07 — "Você não precisa aprender mais nada", 1:35</h3>
+        <div class="creative-stats">
+          <div><small>Leads</small><b>36</b></div>
+          <div><small>Custo/lead</small><b>R$ 5,43</b></div>
+          <div><small>Cliques link</small><b>124</b></div>
+        </div>
+        <a class="drive" href="https://drive.google.com/file/d/11ko6e2crR3FdNdbD58w2HPWCN96xMwJH/view?usp=sharing" target="_blank" rel="noopener">Ver criativo no Drive →</a>
+      </div>
+
+      <div class="creative-card">
+        <span class="rank">4</span>
+        <h3>ADV18 — "Eu não sei", 1:13</h3>
+        <div class="creative-stats">
+          <div><small>Leads</small><b>32</b></div>
+          <div><small>Custo/lead</small><b>R$ 6,28</b></div>
+          <div><small>Cliques link</small><b>149</b></div>
+        </div>
+        <a class="drive" href="https://drive.google.com/file/d/1XlRbhn3_CPL2QNGqjHjGf7i5Jsz3AKwC/view?usp=sharing" target="_blank" rel="noopener">Ver criativo no Drive →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand">
+      <svg viewBox="0 0 100 100" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" aria-label="BM Mídias" style="width:28px;height:28px">
+        <polygon points="50,4 90,27 90,73 50,96 10,73 10,27"></polygon>
+        <polygon points="50,33 65,59 35,59"></polygon>
+        <line x1="50" y1="4" x2="50" y2="33"></line><line x1="90" y1="73" x2="65" y2="59"></line>
+        <line x1="10" y1="73" x2="35" y2="59"></line><line x1="90" y1="27" x2="50" y2="33"></line>
+        <line x1="90" y1="27" x2="65" y2="59"></line><line x1="50" y1="96" x2="65" y2="59"></line>
+        <line x1="50" y1="96" x2="35" y2="59"></line><line x1="10" y1="27" x2="35" y2="59"></line>
+        <line x1="10" y1="27" x2="50" y2="33"></line>
+      </svg>
+      <span class="word" style="font-size:14px"><b>BM</b><i class="bar" style="height:16px"></i><span style="font-size:14px">MÍDIAS</span></span>
+    </div>
+    <p style="margin-top:14px">Central de Estratégia e Resultados — Gestão de Tráfego Pago · rafael@britomidias.com.br</p>
+  </div>
+</footer>
+
+</body>
+</html>
