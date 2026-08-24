@@ -35,6 +35,11 @@
   var WEBHOOK = "https://brito-midias-n8n.ertdxv.easypanel.host/webhook/fda-ja-ab-teste";
   var STORAGE_KEY = "fda_ja_ab_variant";
   var REDIRECT_DELAY_MS = 80; // dá tempo do beacon de log sair antes de navegar
+  // Marcador exclusivo do teste: só quem passa por este splitter carrega isso na URL.
+  // A tag do GTM só dispara o log de lead quando esse parâmetro está presente —
+  // assim tráfego direto/orgânico/outras campanhas que caem em v1-v4 não contamina os dados.
+  var AB_MARKER = "abteste";
+  var AB_MARKER_VALUE = "fda1";
 
   var qs = new URLSearchParams(window.location.search);
   var keys = Object.keys(VARIANTS);
@@ -68,8 +73,9 @@
 
   function buildTargetUrl(variant) {
     var base = VARIANTS[variant];
-    var extra = qs.toString();
-    return extra ? base + "?" + extra : base;
+    var params = new URLSearchParams(qs.toString());
+    params.set(AB_MARKER, AB_MARKER_VALUE);
+    return base + "?" + params.toString();
   }
 
   var variant = pickVariant();
